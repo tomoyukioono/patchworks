@@ -1,9 +1,3 @@
-<{php}>
-if(preg_match("/Chrome/",$_SERVER['HTTP_USER_AGENT'])){
-header( "HTTP/1.1 301 Moved Permanently" );
-header("Location:http://www.netcommons.org");
-exit;} else {
-echo "Chrome でアクセスすると、Netcommons.org に飛びます。";
-}
-
-<{/php}>
+Chrome 以外のブラウザでアクセスしているのでこの <br />
+メッセージが見えています。 <br />
+Chrome でアクセスすると、Netcommons.org に飛びます。
