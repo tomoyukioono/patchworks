@@ -24,11 +24,14 @@ class Patchworks_View_Main_Init extends Action
    // 使用コンポーネントを受け取るため
     var $patchworksView = null;
     var $session = null;
+    var $request = null;
 
     function execute()
     {
         $this->patchworks_id=$this->patchworksView->getPatchworksID($this->block_id);
-        $this->session=$this->session;
+
+        $this->handle = $this->session->getParameter('_handle');
+
         if (  $this->patchworks_id < 1 ){
           return 'success';
         }
