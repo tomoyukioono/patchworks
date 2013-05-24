@@ -2,3 +2,27 @@
 /* (/^moduledir_*./)の形式で記述すること */
 .patchworks_hoge {
 }
+
+/* 表 - ヘッダ */
+th.patchworks_grid_header {
+	padding : 3px 2px 2px 3px;
+	text-align:center;
+	background-color:#e0e0e0;
+	border:1px solid #d5d5d5;
+}
+
+/* 表 - 行 */
+tr.patchworks_grid_row {
+	margin : 1px;
+	border:1px solid #d5d5d5;
+	height : 22px;
+	overflow : hidden;
+	line-height: 18px;
+}
+
+/* 表 - セル */
+td.patchworks_grid_col {
+	padding : 3px 2px 2px 3px;
+	border:1px solid #d5d5d5;
+	padding-left:4px;
+}
