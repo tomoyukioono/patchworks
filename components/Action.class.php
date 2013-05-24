@@ -58,7 +58,7 @@ class Patchworks_Components_Action
         }
         $params = array(
             "block_id" => $blockID,
-            "patchworks_id" => $this->_request->getParameter("patchworks_id")
+            "patchworks_id" => intval($this->_request->getParameter("patchworks_id"))
         );
        if (!empty($blockIDs)) {
             $result = $this->_db->updateExecute("patchworks", $params, "block_id", true);
