@@ -37,7 +37,7 @@ class Patchworks_View_Main_Init extends Action
           return 'success';
         }
 // ここでコードを読み込む
-       include(BASE_DIR .'/webapp/modules/patchworks/patchs/1.php');
+       include(BASE_DIR .'/webapp/modules/patchworks/patchs/'.$this->patchworks_id.'.php');
 
          return  'success' . $this->patchworks_id; 
     }
