@@ -1,0 +1,79 @@
+<{strip}>
+<{* パッチワーク一覧用テンプレート *}>
+<{$action.patchworks_id}>
+<div class="outerdiv">
+	<form action="#">
+		<div class="top_description">
+			<{$lang.patchworks}>
+		</div>
+
+			<table style="border: 2px #000000 solid;" summary="<{$lang.pathworks_list_summary}>">
+			 <tr>
+					<th ></th>
+					<th >
+						<{$lang.patchworks_id}>
+					</th>
+					<th >
+						<{$lang.patchworks_name}>
+					</th>
+				</tr>
+			 <tr id="patchworks_current_rowd1<{$id}>" >
+			   <td >
+                    <label for="patchworks_current1<{$id}>">
+                    <input id="patchworks_current1<{$id}>" type="radio" name="current" 
+                    value="1" onclick="patchworksCls['<{$id}>'].changeCurrent('1');" 
+                    <{if $action.patchworks_id == 1}>checked<{/if}>/>
+                    </label>
+
+			   </td>
+			   <td >1</td>
+			   <td >
+			    <{$lang.patchworks_name_1}>
+			   </td>
+			</tr>
+			<tr id="patchworks_current_rowd2<{$id}>" >
+				<td >
+                    <label for="patchworks_current2<{$id}>">
+                    <input id="patchworks_current2<{$id}>" type="radio" name="current" 
+                    value="2" onclick="patchworksCls['<{$id}>'].changeCurrent('2');" 
+                    <{if $action.patchworks_id == 2}>checked<{/if}>/>
+                    </label>
+			   </td>
+			   <td >2</td>
+			   <td >
+			    <{$lang.patchworks_name_2}>
+			   </td>
+			</tr>
+			<tr id="patchworks_current_rowd3<{$id}>" >
+				<td >
+                    <label for="patchworks_current3<{$id}>">
+                    <input id="patchworks_current3<{$id}>" type="radio" name="current" 
+                    value="3" onclick="patchworksCls['<{$id}>'].changeCurrent('3');"
+                    <{if $action.patchworks_id == 3}>checked<{/if}>/>
+                    </label>
+			   </td>
+			   <td >3</td>
+			   <td >
+			    <{$lang.patchworks_name_3}>
+			   </td>
+			</tr>
+			<tr id="patchworks_current_rowd4<{$id}>" >
+				<td >
+                    <label for="patchworks_current4<{$id}>">
+                    <input id="patchworks_current4<{$id}>" type="radio" name="current" 
+                    value="4" onclick="patchworksCls['<{$id}>'].changeCurrent('4');" 
+                    <{if $action.patchworks_id == 4}>checked<{/if}>/>
+                    </label>
+			   </td>
+			   <td >4</td>
+			   <td >
+			    <{$lang.patchworks_name_4}>
+			   </td>
+			</tr>
+
+
+			</table>
+	</form>
+</div>
+<{include file = "../patchworks_script.html"}>
+<{/strip}>
