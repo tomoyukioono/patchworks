@@ -1,3 +1,3 @@
 <?php
-$this->ymdhi = date("Ymdhi");
+$this->ymdhi = date("Ymd:hi:s");
 ?>
