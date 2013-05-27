@@ -1,15 +1,4 @@
 <{strip}>
-<{if $action.error_mes != "" && empty($action.iframeSsl|smarty:nodefaults)}>
-	<div class="deadline">
-		<{$lang.login_redirect_url_mes|smarty:nodefaults}>
-	</div>
-<{/if}>
-
-<{if !empty($action.iframeSsl|smarty:nodefaults)}>
-	<div class="login_ssl_font">
-		<{$lang.login_ssl|smarty:nodefaults}>
-	</div>
-<{/if}>
 
 <form class="<{$action.formClassName}> <{$action.sslOuterClassName}>" id="login_form<{$id}>" method="post" action="<{if $smarty.server.HTTPS|lower == 'on'}><{$smarty.const.BASE_URL_HTTPS}><{else}><{$smarty.const.BASE_URL}><{/if}><{$smarty.const.INDEX_FILE_NAME}>" target="targetFrame<{$id}>">
 	<input type="hidden" name="action" value="login_action_main_init" />
