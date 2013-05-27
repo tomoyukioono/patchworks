@@ -30,6 +30,11 @@ class Patchworks_View_Main_Init extends Action
     {
         $this->patchworks_id=$this->patchworksView->getPatchworksID($this->block_id);
 
+// login 用のパッチワーク
+        if (  $this->patchworks_id == "login" ){
+          return 'successlogin';
+        }
+
 
         $this->handle = $this->session->getParameter('_handle');
 

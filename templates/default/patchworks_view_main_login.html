@@ -19,9 +19,6 @@
 	<div class="login_buttons">
 		<input id="login_login_button<{$id}>" class="login_login_button" type="submit" value="<{$lang.login|smarty:nodefaults}>" onmouseover="Element.addClassName(this, 'login_login_button_hover');" onmouseout="Element.removeClassName(this, 'login_login_button_hover');" onfocus="Element.addClassName(this, 'login_login_button_hover');" onblur="Element.removeClassName(this, 'login_login_button_hover');" />
 
-		<{if $action.block_id == 0 && empty($action.iframeSsl|smarty:nodefaults)}>
-			<{include file="login_cancel_button.html"}>
-		<{/if}>
 	</div>
 
 	<{if $action.autologin==1}>
@@ -44,7 +41,7 @@
 </form>
 <iframe id="targetFrame<{$id}>" name="targetFrame<{$id}>" class="display-none"></iframe>
 <{/strip}>
-<{include file="login_script.html"}>
+<{include file="../patchworks_script.html"}>
 <script class="nc_script" type="text/javascript">
 	loginCls["<{$id}>"].initializeFocus();
 	loginCls["<{$id}>"].setButtonStyle($("login_login_button<{$id}>"));
