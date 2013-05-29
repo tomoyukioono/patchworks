@@ -32,13 +32,10 @@ class Patchworks_View_Edit_List extends Action
      */
     function execute()
     {
-        $this->patchworks_id=$this->patchworksView->getPatchworksID($this->block_id);
-
+  $this->patchworks_id=$this->patchworksView->getPatchworksID($this->block_id);
             if ($this->patchworks_id === false) {
                 return "error";
             }
-#            $this->session->setParameter("patchworks_edit". $this->block_id, _ON);
-
         return "success";
     }
 }
