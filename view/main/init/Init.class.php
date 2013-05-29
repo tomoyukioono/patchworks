@@ -36,13 +36,14 @@ class Patchworks_View_Main_Init extends Action
         }
 
 
+        $this->user_id = $this->session->getParameter('_user_id');
         $this->handle = $this->session->getParameter('_handle');
 
-        if (  $this->patchworks_id < 1 ){
+        if (  intval($this->patchworks_id) < 1 ){
           return 'success';
         }
 // ここでコードを読み込む
-       include(BASE_DIR .'/webapp/modules/patchworks/patchs/'.$this->patchworks_id.'.php');
+       include(BASE_DIR .'/webapp/modules/patchworks/patchs/'.intval($this->patchworks_id).'.php');
 
          return  'success' . $this->patchworks_id; 
     }
