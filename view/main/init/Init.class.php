@@ -30,14 +30,18 @@ class Patchworks_View_Main_Init extends Action
     {
         $this->patchworks_id=$this->patchworksView->getPatchworksID($this->block_id);
 
-// login 用のパッチワーク
-        if (  $this->patchworks_id == "login" ){
-          return 'successlogin';
-        }
 
 
         $this->user_id = $this->session->getParameter('_user_id');
         $this->handle = $this->session->getParameter('_handle');
+        $this->config = $this->patchworksView->getConfig($this->patchworks_id);
+        $this->item=$this->patchworksView->getItem($this->block_id);
+        $this->multidatabase_id =0; 
+        if (isset( $this->item->multidatabase_id) ){
+        $this->multidatabase_id =$this->item->multidatabase_id;
+        } 
+        $this->xxx=$this->multidatabase_id;
+        //$this->xxx=print_r($this->patchworksView->getItem($this->block_id),true);
 
         if (  intval($this->patchworks_id) < 1 ){
           return 'success';

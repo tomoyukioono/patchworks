@@ -41,6 +41,60 @@ class Patchworks_Components_View
 
 
 	/**
+	 * block ごとの設定情報を取得する
+	 *
+	 * @return string
+	 * @access	public
+	 */
+	function getItem($block_id) {
+        $block_id=intval($block_id);
+        if ( $block_id <1  ) {
+         return false;
+        }
+		$params = array($block_id);
+		$sql = "SELECT item ".
+				"FROM {patchworks} ".
+				"WHERE block_id = ?";
+		$x = $this->_db->execute($sql,$params);
+		if ($x === false) {
+			$this->_db->addError();
+			return $x;
+		}
+		if(isset($x[0]["item"])) {
+		      return json_decode($x[0]["item"]);} else
+        {return 0;}
+
+
+      }
+	/**
+	 * patchworks_id の設定情報を取得する
+	 *
+	 * @return string
+	 * @access	public
+	 */
+	function getConfig($patchworks_id) {
+      // $patchworksID が自然数かどうかの判定を行なっている  
+
+      $patchworks_id=intval($patchworks_id);
+      if ( $patchworks_id <1  ) {
+        return false;
+      }
+		$params = array($patchworks_id);
+		$sql = "SELECT config ".
+				"FROM {patchworks_config} ".
+				"WHERE patchworks_id = ?";
+		$x = $this->_db->execute($sql,$params);
+		if ($x === false) {
+			$this->_db->addError();
+			return $x;
+		}
+		if(isset($x[0]["config"])) {
+		      return json_decode($x[0]["config"]);} else
+        {return 0;}
+
+    }
+
+	/**
 	 * 現在配置されている patchworks_id を取得する
 	 *
 	 * @return string
@@ -75,6 +129,7 @@ class Patchworks_Components_View
 		$x = $this->_db->execute($sql);
         return $x;
     }
+
 	/**
 	 * multidatabase からデータを読み込む
 	 *
@@ -82,42 +137,60 @@ class Patchworks_Components_View
 	 * @access	public
 	 */
 
-	function getMulti($multidatabase_id) {
-    // content_id の一覧を取得
+	function getMultiMeta($multidatabase_id) {
+    // Meta data の一覧を取得し、名前をキーにして戻す
 		$params = array(intval($multidatabase_id));
-		$sql = "SELECT content_id ".
-				"FROM {multidatabase_content} ".
+		$sql = "SELECT  metadata_id,name ".
+				"FROM {multidatabase_metadata} ".
 				"WHERE multidatabase_id = ?";
-		$content_ids = $this->_db->execute($sql, $params);
-		if ($content_ids === false) {
+		$x = $this->_db->execute($sql, $params);
+		if ($x === false) {
 			$this->_db->addError();
-			return $content_ids;
+			return false;
 		}
-
         $xxx=array();
-
-        foreach ($content_ids as $k=>$v) {
-           $xxx[$v['content_id']]=array();
-		   $params = array($v['content_id']);
-		   $sql = "SELECT metadata_id,content ".
-				"FROM {multidatabase_metadata_content} ".
-				"WHERE content_id = ?";
-		   $x = $this->_db->execute($sql, $params);
-		   if ($x === false) {
-			   $this->_db->addError();
-			   return $x;
-		   }
-           $xx=array();
-           foreach ($x as $k1=>$v1) {
-               $xx[$v1['metadata_id']] = $v1['content']; 
-           }
-           $xxx[$v['content_id']]=$xx;
-
+        foreach ($x as $k=>$v) {
+         $xxx[$v['name']]=$v['metadata_id']; 
         }
         return $xxx; 
-
     }
+	
+    function getMultiByBlockID($multidatabase_id,$block_id) {
+    // 指定された汎用DBが、項目名として、block_id を持っている場合に、
+    // そのコンテンツを戻す
+       $xxx = array();
+	   $metadata=$this->getMultiMeta($multidatabase_id); 
 
+       if ( isset($metadata['block_id']) ){
+		$metadata_block_id=$metadata['block_id'];
+		$params = array($metadata_block_id,$block_id);
+		$sql = "SELECT content_id ".
+				"FROM {multidatabase_metadata_content} ".
+				"WHERE metadata_id = ? and  content = ?";
+		$x = $this->_db->execute($sql, $params);
+
+        if ( isset($x[0]['content_id']) ) {
+         $content_id = $x[0]['content_id'];
+		 $sql = "SELECT  metadata_id,content ".
+				"FROM {multidatabase_metadata_content} ".
+				"WHERE content_id = ? ";
+		 $params = array($content_id);
+         // content_id のデータを全部もってくる
+		 $x = $this->_db->execute($sql, $params);
+         if ( isset($x[0]) ) {
+         // metadata の名前をキーにした連想配列をつくり戻す
+		 $xx = array();
+         foreach ($metadata as $k=>$v) {
+		 $xx[$v] = $k;
+         }
+         foreach ($x as $k=>$v) {
+          $xxx[$xx[$v['metadata_id']]] = $v['content'];
+         }
+         } 
+         } 
+         }
+       return $xxx; 
+    }
 	/**
 	 * pages から group room の情報を読取る
 	 * group room は、pages の中に埋め込まれている
