@@ -10,12 +10,11 @@ if ($this->first_choice_startpage <> $k
 }
 //$this->xxx=print_r($x,true);
 //$this->xxx=$this->first_choice_startpage;
-//$this->xxx=print_r($x,true);
-
+$this->xxx=BASE_URL;
 
 if(isset($x[0]) && count($x)==1 ) {
     header( "HTTP/1.1 301 Moved Permanently" );
-    header("Location:/group/" . $x[0]. "/");
+    header("Location:" .BASE_URL ."/group/". $x[0]. "/");
     exit;
 
 }
@@ -30,4 +29,6 @@ $_SERVER['HTTP_USER_AGENT'])){
     exit;
    }
 }
+/**
+**/
 ?>
