@@ -246,5 +246,33 @@ class Patchworks_Components_View
         }
 		return $xx;
     }
+    
+    // 設定情報の取得
+    function getGlobalConfigByName($conf_name) {
+		$params = array($conf_name);
+		$sql = "SELECT conf_value ".
+				"FROM {config} ".
+				"WHERE conf_name = ?";
+
+		$x = $this->_db->execute($sql, $params);
+
+		if ($x === false) {
+			  $this->_db->addError();
+			  return $x;
+              }
+        return $x[0]['conf_value'];
+    }
+
+    // sql を直接送ってデータ取得
+    function getDataBySql($params,$sql) {
+		$x = $this->_db->execute($sql, $params);
+		if ($x === false) {
+			  $this->_db->addError();
+			  return $x;
+              }
+		return $x;
+    }
+
 }
+
 ?>

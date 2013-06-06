@@ -36,12 +36,16 @@ class Patchworks_View_Main_Init extends Action
         $this->handle = $this->session->getParameter('_handle');
         $this->config = $this->patchworksView->getConfig($this->patchworks_id);
         $this->item=$this->patchworksView->getItem($this->block_id);
+        $this->groups=$this->patchworksView->getGroups();
+        $this->rooms=$this->patchworksView->getRoomsByUser($this->user_id);
+        $x=$this->patchworksView->getGlobalConfigByName("first_choice_startpage");
+        $this->first_choice_startpage = $x;
+        
         $this->multidatabase_id =0; 
+
         if (isset( $this->item->multidatabase_id) ){
         $this->multidatabase_id =$this->item->multidatabase_id;
         } 
-        $this->xxx=$this->multidatabase_id;
-        //$this->xxx=print_r($this->patchworksView->getItem($this->block_id),true);
 
         if (  intval($this->patchworks_id) < 1 ){
           return 'success';
