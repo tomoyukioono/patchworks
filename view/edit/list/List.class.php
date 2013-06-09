@@ -32,11 +32,21 @@ class Patchworks_View_Edit_List extends Action
      */
     function execute()
     {
-  $this->patchworks_id=$this->patchworksView->getPatchworksID($this->block_id);
+      $this->patchworks_id=$this->patchworksView->getPatchworksID($this->block_id);
             if ($this->patchworks_id === false) {
                 return "error";
             }
-        return "success";
-    }
-}
+       
+
+      $x=array();
+      for( $i = 1 ;  $i < 8 ; $i++) {
+        $x=$this->patchworksView->getConfig($i);
+       if ( isset($x->patchworks_name) ){
+            $xx[$i]=$x->patchworks_name; } else {
+            $xx[$i]=""; }  
+      }
+      $this->patchworks_name=$xx; 
+      return "success";
+      }
+      }
 ?>

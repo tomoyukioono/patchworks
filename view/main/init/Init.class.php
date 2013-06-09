@@ -54,7 +54,7 @@ class Patchworks_View_Main_Init extends Action
        include(BASE_DIR .'/webapp/modules/patchworks/patchs/'.intval($this->patchworks_id).'.php');
 
          //return  'success' . $this->patchworks_id; 
-          $this->template='patchworks_view_main_init_'.$this->patchworks_id. '.html';
+          $this->view_main_init_template='patchworks_view_main_init_'.$this->patchworks_id. '.html';
           return 'success';
     }
 }
