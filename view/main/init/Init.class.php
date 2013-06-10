@@ -51,7 +51,7 @@ class Patchworks_View_Main_Init extends Action
           return 'success';
         }
 // ここでコードを読み込む
-       include(BASE_DIR .'/webapp/modules/patchworks/patchs/'.intval($this->patchworks_id).'.php');
+       include(BASE_DIR .'/webapp/modules/patchworks/patches/'.intval($this->patchworks_id).'.php');
 
          //return  'success' . $this->patchworks_id; 
           $this->view_main_init_template='patchworks_view_main_init_'.$this->patchworks_id. '.html';
