@@ -23,6 +23,7 @@ class Patchworks_View_Main_Init extends Action
     var $block_id = null;
    // 使用コンポーネントを受け取るため
     var $patchworksView = null;
+    var $onlineView = null;
     var $session = null;
     var $request = null;
 
