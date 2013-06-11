@@ -25,6 +25,7 @@ class Patchworks_Components_View
 	 *
 	 * @access	private
 	 */
+	var $_container = null;
 	var $_request = null;
 
 	/**
@@ -37,6 +38,7 @@ class Patchworks_Components_View
 		$container =& DIContainerFactory::getContainer();
 		$this->_db =& $container->getComponent("DbObject");
 		$this->_request =& $container->getComponent("Request");
+		$this->_session =& $container->getComponent("Session");
 	}
 
 
@@ -272,6 +274,63 @@ class Patchworks_Components_View
               }
 		return $x;
     }
+
+	function getOnlineMember(){
+	    $session = $this->_session;
+        
+        $onlineTime = 300;
+
+		$baseSessionID = $session->getParameter("_base_sess_id");
+		if (empty($baseSessionID)) {
+			$baseSessionID = session_id();
+		}
+
+		$date = date("YmdHis", time() - $onlineTime);
+		$params = array(
+			$date,
+			$baseSessionID,
+			_OFF
+		);
+		$sql = "SELECT base_sess_id, sess_data ".
+				"FROM {session} ".
+				"WHERE sess_updated > ? ".
+				"AND base_sess_id != ? ".
+				"AND old_flag = ?";
+
+		$result = $this->_db->execute($sql, $params);
+		if ($result === false) {
+			$this->_db->addError();
+			return "error";
+		}
+
+		$sessionIDs = array();
+		$member = 0;
+
+        $x=array();
+		foreach (array_keys($result) as $key) {
+			if (in_array($result[$key]["base_sess_id"], $sessionIDs)) {
+				continue;
+			}
+			
+			$sessionIDs[] = $result[$key]["base_sess_id"];
+			
+			if (preg_match('/;_user_id\|s:40:"([0-9a-zA-Z]+)";/', $result[$key]["sess_data"], $matches)) {
+				$member++;
+			}
+		}
+		$user = count($sessionIDs) + 1;
+
+		$userID = $session->getParameter("_user_id");
+		if (!empty($userID)) {
+			$member++;
+		}
+		
+		$userMember = array("xxx" =>$x,
+                           "user" => $user,
+						   "member" => $member);
+		
+		return $userMember;
+	}
 
 }
 
