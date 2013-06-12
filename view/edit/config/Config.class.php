@@ -35,6 +35,8 @@ class Patchworks_View_Edit_Config extends Action
   $this->patchworks_id=$this->patchworksView->getPatchworksID($this->block_id);
   $this->config=$this->patchworksView->getConfig($this->patchworks_id);
 
+  $this->view_edit_config_template='patchworks_view_edit_config_'.$this->patchworks_id . '.html';
+
   if ( isset($this->config->patchworks_id)  ){$this->patchworks_data_flag=1;}
 
             if ($this->patchworks_id === false) {

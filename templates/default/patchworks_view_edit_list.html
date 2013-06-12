@@ -1,9 +1,7 @@
 <{strip}>
 <{* パッチワーク一覧用テンプレート *}>
-<{$action.patchworks_id}>
 <div class="outerdiv">
 	<form action="#">
-
 <{*
 		<div class="top_description">
 			<{$lang.patchworks}>
@@ -121,6 +119,34 @@
 <{$action.patchworks_name.7}>
 </td>
 </tr>
+<tr id="patchworks_current_rowd8<{$id}>" >
+<td class="patchworks_grid_col">
+<label for="patchworks_current8<{$id}>">
+<input id="patchworks_current8<{$id}>" type="radio" name="current" 
+ value="8" onclick="patchworksCls['<{$id}>'].changeCurrent('8');" 
+<{if $action.patchworks_id == 8}>checked<{/if}>/>
+</label>
+</td>
+<td class="patchworks_grid_col">8</td>
+<td class="patchworks_grid_col">
+<{$action.patchworks_name.8}>
+</td>
+</tr>
+<tr id="patchworks_current_rowd9<{$id}>" >
+<td class="patchworks_grid_col">
+<label for="patchworks_current9<{$id}>">
+<input id="patchworks_current9<{$id}>" type="radio" name="current" 
+ value="9" onclick="patchworksCls['<{$id}>'].changeCurrent('9');" 
+<{if $action.patchworks_id == 9}>checked<{/if}>/>
+</label>
+</td>
+<td class="patchworks_grid_col">9</td>
+<td class="patchworks_grid_col">
+<{$action.patchworks_name.9}>
+</td>
+</tr>
+
+
 
 			</table>
 		</fieldset>

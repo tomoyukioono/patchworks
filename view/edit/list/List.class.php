@@ -39,7 +39,7 @@ class Patchworks_View_Edit_List extends Action
        
 
       $x=array();
-      for( $i = 1 ;  $i < 8 ; $i++) {
+      for( $i = 1 ;  $i < 10 ; $i++) {
         $x=$this->patchworksView->getConfig($i);
        if ( isset($x->patchworks_name) ){
             $xx[$i]=$x->patchworks_name; } else {
