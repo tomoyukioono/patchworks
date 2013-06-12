@@ -19,6 +19,7 @@
 <input id="patchworks_name" class="text" type="text" name="patchworks_name" /> 
             </td>
         </tr>
+
 <tr class="row">
 <th class="nowrap" scope="row">
 <label for="patchworks_config_code<{$id}>">
@@ -32,6 +33,21 @@
 </textarea>
 </td>
 </tr>
+
+<tr class="row">
+<th class="nowrap" scope="row">
+<label for="patchworks_config_message<{$id}>">
+<{$lang.patchworks_config_message}>
+</label>
+</th>
+<td>
+<textarea id="patchworks_config_message"
+ name="patchworks_config_message" />
+<{$action.config.patchworks_config_message}>
+</textarea>
+</td>
+</tr>
+
 
 
 </table>
