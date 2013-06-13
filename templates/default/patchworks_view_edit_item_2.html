@@ -40,7 +40,6 @@ type="radio" name="patchworks_item_agent_radio" value="2"
 class="text" type="text" name="patchworks_item_agent" />
 </td>
 </tr>
-<!--
 <tr class="row">
 <th class="nowrap" scope="row">
 <label for="patchworks_item_another<{$id}>">
@@ -52,7 +51,6 @@ class="text" type="text" name="patchworks_item_agent" />
 class="text" type="text" name="patchworks_item_another" />
 </td>
 </tr>
--->
 
 <tr class="row">
 <th class="nowrap" scope="row">
@@ -112,6 +110,7 @@ class="text" type="text" name="patchworks_item_another" />
     patchworksForm["action"].value = "patchworks_action_edit_item";
     patchworksForm["patchworks_id"].value = "<{$action.patchworks_id}>";
     patchworksForm["block_id"].value = "<{$action.block_id}>";
+    patchworksForm["patchworks_item_another"].value = "<{$action.item.patchworks_item_another}>";
     patchworksForm["patchworks_item_agent"].value = "<{$action.item.patchworks_item_agent}>";
     patchworksForm["patchworks_item_agent_radio"].value = "<{$action.item.patchworks_item_agent_radio}>";
 </script>
