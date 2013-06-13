@@ -36,7 +36,9 @@ class Patchworks_View_Edit_Item extends Action
   $this->item=$this->patchworksView->getItem($this->block_id);
   $this->multis=$this->patchworksView->getMultis();
 
-  $this->view_edit_item_template='patchworks_view_edit_item_'.$this->patchworks_id . '.html';
+  $x=intval($this->patchworks_id); 
+  $x=BASE_DIR ."/webapp/modules/patchworks/patches/".$x."/patchworks_view_edit_item_".$x. ".html";
+  $this->view_edit_item_template=$x;
 
   if (isset($this->item->multidatabase_id)  ) {
   $multi_by_block = $this->patchworksView->getMultiByBlockID($this->item->multidatabase_id,$this->block_id);

@@ -34,8 +34,10 @@ class Patchworks_View_Edit_Config extends Action
     {
   $this->patchworks_id=$this->patchworksView->getPatchworksID($this->block_id);
   $this->config=$this->patchworksView->getConfig($this->patchworks_id);
-
-  $this->view_edit_config_template='patchworks_view_edit_config_'.$this->patchworks_id . '.html';
+  
+  $x=intval($this->patchworks_id);
+  $x=BASE_DIR ."/webapp/modules/patchworks/patches/".$x."/patchworks_view_edit_config_".$x. ".html";
+  $this->view_edit_config_template=$x;
 
   if ( isset($this->config->patchworks_id)  ){$this->patchworks_data_flag=1;}
 

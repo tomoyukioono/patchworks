@@ -52,10 +52,13 @@ class Patchworks_View_Main_Init extends Action
           return 'success';
         }
 // ここでコードを読み込む
-       include(BASE_DIR .'/webapp/modules/patchworks/patches/'.intval($this->patchworks_id).'.php');
-
+       $x=intval($this->patchworks_id);
+       include(BASE_DIR .'/webapp/modules/patchworks/patches/'.$x.'/'.$x.'.php');
+       
+       $x=intval($this->patchworks_id);
+       $x=BASE_DIR ."/webapp/modules/patchworks/patches/".$x."/patchworks_view_main_init_".$x. ".html";
          //return  'success' . $this->patchworks_id; 
-          $this->view_main_init_template='patchworks_view_main_init_'.$this->patchworks_id. '.html';
+       $this->view_main_init_template=$x;
           return 'success';
     }
 }
