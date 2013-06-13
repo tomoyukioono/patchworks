@@ -1,0 +1,52 @@
+<{strip}>
+<{* パッチワークス基本画面 *}>
+<form id="patchworks_form<{$id}>" action="#" onsubmit="commonCls.sendPost('<{$id}>', Form.serialize($('patchworks_form<{$id}>')), {'target_el':$('<{$id}>'),'focus_flag':true});return false;">
+<input type="hidden" name="action" />
+<input type="hidden" name="patchworks_id" value=999999/>
+
+
+<h1> ID 999999 全体の設定</h1>
+
+    <table class="outer" summary="<{$smarty.const._SUMMARY_SETTINGFORM}>">
+
+        <tr class="row">
+            <th class="nowrap" scope="row">
+                <label for="patchworks_active<{$id}>">
+                    <{$lang.patchworks_active}>
+                </label>
+            </th>
+            <td>
+             <input id="patchworks_active" class="text" type="text" 
+              name="patchworks_active" 
+               value="<{$action.config.patchworks_active}>"/> 
+            </td>
+        </tr>
+
+        <tr class="row">
+            <th class="nowrap" scope="row">
+                <label for="patchworks_non_active<{$id}>">
+                    <{$lang.patchworks_non_active}>
+                </label>
+            </th>
+            <td>
+             <input id="patchworks_non_active" class="text" type="text" 
+              name="patchworks_non_active" 
+               value="<{$action.config.patchworks_non_active}>"/> 
+            </td>
+        </tr>
+
+
+
+</table>
+    <div class="btn-bottom">
+        <input class="btn-width" type="submit" value="<{$lang._regist|smarty:nodefaults}>" />
+        <input class="lined_btn btn-width" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="commonCls.sendView('<{$id}>', 'patchworks_view_edit_config');" />
+    </div>
+</form>
+<{include file="../patchworks_script.html"}>
+<script class="nc_script" type="text/javascript">
+    var patchworksForm = $("patchworks_form<{$id}>");
+    patchworksForm["action"].value = "patchworks_action_edit_base";
+
+</script>
+<{/strip}>
