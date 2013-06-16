@@ -53,10 +53,10 @@ class Patchworks_View_Main_Init extends Action
         }
 // ここでコードを読み込む
        $x=intval($this->patchworks_id);
-       include(BASE_DIR .'/webapp/modules/patchworks/patches/'.$x.'/'.$x.'.php');
+       include(BASE_DIR .'/extra/addin/patchworksID/'.$x.'/'.$x.'.php');
        
        $x=intval($this->patchworks_id);
-       $x=BASE_DIR ."/webapp/modules/patchworks/patches/".$x."/patchworks_view_main_init_".$x. ".html";
+       $x=BASE_DIR ."/extra/addin/patchworksID/".$x."/patchworks_view_main_init_".$x. ".html";
          //return  'success' . $this->patchworks_id; 
        $this->view_main_init_template=$x;
           return 'success';
