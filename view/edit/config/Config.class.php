@@ -36,7 +36,7 @@ class Patchworks_View_Edit_Config extends Action
   $this->config=$this->patchworksView->getConfig($this->patchworks_id);
   
   $x=intval($this->patchworks_id);
-  $x=BASE_DIR ."/webapp/modules/patchworks/patches/".$x."/patchworks_view_edit_config_".$x. ".html";
+  $x=BASE_DIR ."/extra/addin/patchworksID/".$x."/patchworks_view_edit_config_".$x. ".html";
   $this->view_edit_config_template=$x;
 
   if ( isset($this->config->patchworks_id)  ){$this->patchworks_data_flag=1;}
