@@ -6,10 +6,10 @@
  * patchworks 
  *
  * @package     NetCommons
- * @author      Noriko Arai,Ryuji Masukawa
- * @copyright   2006-2007 NetCommons Project
+ * @author      Tadashi Nagao etc
+ * @copyright   2013-2013 Patchworks for N7etCommons
  * @license     http://www.netcommons.org/license.txt  NetCommons License
- * @project     NetCommons Project, supported by National Institute of Informatics
+ * @project     Patchworks for NetCommons  
  * @access      public
  */
 class Patchworks_View_Edit_Base extends Action
@@ -35,12 +35,11 @@ class Patchworks_View_Edit_Base extends Action
      $this->patchworks_id=999999;
      $this->config=$this->patchworksView->getConfig($this->patchworks_id);
 
-  if ( isset($this->config->patchworks_id)  ){$this->patchworks_data_flag=1;}
-
+     if (isset($this->config->patchworks_id)) 
+         {$this->patchworks_data_flag = 1 ;}
             if ($this->patchworks_id === false) {
                 return "error";
             }
-
         return "base";
     }
 }
