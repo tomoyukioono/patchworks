@@ -34,7 +34,15 @@ class Patchworks_View_Edit_Base extends Action
     {
      $this->patchworks_id=999999;
      $this->config=$this->patchworksView->getConfig($this->patchworks_id);
-
+     $x = scandir(BASE_DIR . "/extra/addin/patchworksID");
+     $xarray = array();
+     foreach ($x as $k=>$v) {
+       if (intval($v) >0 ) {
+         $xarray[]=$v;
+       }  
+     }
+     sort($xarray); 
+     $this->xxx = print_r($xarray,true);
      if (isset($this->config->patchworks_id)) 
          {$this->patchworks_data_flag = 1 ;}
             if ($this->patchworks_id === false) {

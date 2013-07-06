@@ -32,14 +32,24 @@ class Patchworks_View_Edit_Item extends Action
      */
     function execute()
     {
-  $this->patchworks_id=$this->patchworksView->getPatchworksID($this->block_id);
-  $this->item=$this->patchworksView->getItem($this->block_id);
-  $this->multis=$this->patchworksView->getMultis();
+     $this->patchworks_id=intval($this->patchworksView->getPatchworksID($this->block_id));
+     if ($this->patchworks_id === false || $this->patchworks_id === 0) {
+                return "error";
+     }
+     $this->item=$this->patchworksView->getItem($this->block_id);
+     if ( isset($this->item->patchworks_id) )
+       {$this->patchworks_data_flag=1;}
+     $this->multis=$this->patchworksView->getMultis();
+     $x=BASE_DIR ."/extra/addin/patchworksID/".$this->patchworks_id."/patchworks_view_edit_item_".$this->patchworks_id. ".html";
+     if (!is_file($x)){$x = "";}
+     $this->view_edit_item_template=$x;
 
-  $x=intval($this->patchworks_id);
-  $x=BASE_DIR ."/extra/addin/patchworksID/".$x."/patchworks_view_edit_item_".$x. ".html";
- 
-  $this->view_edit_item_template=$x;
+     $x = BASE_DIR .'/extra/addin/patchworksID/'.$this->patchworks_id.'/edit_item.php';
+     if ( is_file( $x ) ) {
+     // ここでコードを読み込む
+       include($x);
+       return "item";
+     } else {
 
   if (isset($this->item->multidatabase_id)  ) {
   $multi_by_block = $this->patchworksView->getMultiByBlockID($this->item->multidatabase_id,$this->block_id);
@@ -48,12 +58,9 @@ class Patchworks_View_Edit_Item extends Action
       $this->item->multidatabase_id=0;
   } 
 
-  if ( isset($this->item->patchworks_id) ){$this->patchworks_data_flag=1;}
-            if ($this->patchworks_id === false) {
-                return "error";
-            }
-
         return "item";
+
     }
+ } // end of execution
 }
 ?>

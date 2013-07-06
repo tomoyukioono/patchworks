@@ -32,18 +32,20 @@ class Patchworks_View_Edit_Config extends Action
      */
     function execute()
     {
-  $this->patchworks_id=$this->patchworksView->getPatchworksID($this->block_id);
+  $this->patchworks_id = intval($this->patchworksView->getPatchworksID($this->block_id));
+  if ( $this->patchworks_id == 0 ){return "error";};
   $this->config=$this->patchworksView->getConfig($this->patchworks_id);
-  
-  $x=intval($this->patchworks_id);
-  $x=BASE_DIR ."/extra/addin/patchworksID/".$x."/patchworks_view_edit_config_".$x. ".html";
+  $this->multis=$this->patchworksView->getMultis();
+ 
+  $x=BASE_DIR ."/extra/addin/patchworksID/".$this->patchworks_id . 
+  "/patchworks_view_edit_config_".$this->patchworks_id. ".html";
+  if (! is_file($x)) {
+   $x=""; 
+  }
   $this->view_edit_config_template=$x;
 
   if ( isset($this->config->patchworks_id)  ){$this->patchworks_data_flag=1;}
 
-            if ($this->patchworks_id === false) {
-                return "error";
-            }
 
         return "config";
     }

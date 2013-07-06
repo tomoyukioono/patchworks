@@ -36,17 +36,21 @@ class Patchworks_View_Edit_List extends Action
             if ($this->patchworks_id === false) {
                 return "error";
             }
-       
+      $x = $this->patchworksView->getConfig(999999);
+      $x = $x->patchworks_active;
+      $xarray=explode(",",$x);  
+      $xx=array();
+      foreach ( $xarray as $k=>$v ) {
+        $x=$this->patchworksView->getConfig($v);
+        $xx[$v]['name'] = $x->patchworks_name;
+        $xx[$v]['id'] = $v;
+      }
+      //$this->xxx= print_r($xx,true);
+      $this->patchworks_list= $xx;
+      $x = BASE_DIR ."/webapp/modules/patchworks/templates/default/patchworks_view_edit_list_one.html";
+      $this->view_edit_list_one_template=$x;
 
-      $x=array();
-      for( $i = 1 ;  $i < 10 ; $i++) {
-        $x=$this->patchworksView->getConfig($i);
-       if ( isset($x->patchworks_name) ){
-            $xx[$i]=$x->patchworks_name; } else {
-            $xx[$i]=""; }  
-      }
-      $this->patchworks_name=$xx; 
       return "success";
-      }
-      }
+}
+}
 ?>
