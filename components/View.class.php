@@ -139,6 +139,24 @@ class Patchworks_Components_View
 	 * @access	public
 	 */
 
+	function getMultiMetaData($multidatabase_id) {
+    // Meta data のデータを取得　キーは、メタデータID
+		$params = array(intval($multidatabase_id));
+		$sql = "SELECT  * ".
+				"FROM {multidatabase_metadata} ".
+				"WHERE multidatabase_id = ?";
+		$x = $this->_db->execute($sql, $params);
+		if ($x === false) {
+			$this->_db->addError();
+			return false;
+		}
+        $xxx=array();
+        foreach ($x as $k=>$v) {
+         $xxx[$v['metadata_id']]=$v; 
+        }
+        return $xxx; 
+
+    }
 	function getMultiMeta($multidatabase_id) {
     // Meta data の一覧を取得し、名前をキーにして戻す
 		$params = array(intval($multidatabase_id));
@@ -157,6 +175,39 @@ class Patchworks_Components_View
         return $xxx; 
     }
 	
+    function getMultiTitle($multidatabase_id) {
+    // 指定された汎用DBのタイトルをもってくる
+		$params = array($multidatabase_id);
+        // title を取得
+		$sql = "SELECT title_metadata_id ".
+				"FROM {multidatabase} ".
+				"WHERE multidatabase_id = ? ";
+		$x = $this->_db->execute($sql, $params);
+        if ( isset($x[0]['title_metadata_id']) ) {
+		   $params = array($x[0]['title_metadata_id']);
+		   $sql = "SELECT   content_id,content ".
+		     	  "FROM {multidatabase_metadata_content} ".
+				  "WHERE metadata_id = ? ";
+        }
+		$x = $this->_db->execute($sql, $params);
+        //return array("x y z");
+        return $x;
+    }
+
+    function getMultiByContentID($content_id) {
+		 $sql = "SELECT  metadata_id,content ".
+				"FROM {multidatabase_metadata_content} ".
+				"WHERE content_id = ? ";
+		 $params = array($content_id);
+		 $x = $this->_db->execute($sql, $params);
+           
+          if ( isset($x[0]) ) {
+          return $x;
+          $xx = array();
+           foreach ($x as $k=>$v) {
+          }
+         }
+    }  
     function getMultiByBlockID($multidatabase_id,$block_id) {
     // 指定された汎用DBが、項目名として、block_id を持っている場合に、
     // そのコンテンツを戻す

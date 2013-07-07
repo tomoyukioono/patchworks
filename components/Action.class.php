@@ -83,8 +83,8 @@ class Patchworks_Components_Action
      * @return boolean  true or false
      * @access  public
      */
-    function setItem($block_id) {
-        $item = json_encode($this->_request->getParameters());
+    function setItem($block_id,$item) {
+        //$item = json_encode($this->_request->getParameters());
         $params = array(
             "block_id" => $block_id,
             "item" => $item

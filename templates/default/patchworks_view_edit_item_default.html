@@ -83,24 +83,6 @@ class="text" type="text" name="patchworks_item_finish" />
 </td>
 </tr>
 
-<tr class="row">
-<th class="nowrap" scope="row">
-<{$lang.patchworks_multi_name}>
-</th>
-<td>
-
-<select id="multi<{$id}>" name="multidatabase_id" >
-<option value="" ></option>
-<{foreach from=$action.multis item=multis name="multis"}>
-<option value="<{$multis.multidatabase_id}>"
-<{if $action.item.multidatabase_id == $multis.multidatabase_id}> selected=selected<{/if}> >
-<{$multis.multidatabase_name}> (<{$multis.multidatabase_id}>) </option>
-<{/foreach}>
-</select> <br />
-
-<{$lang.patchworks_multi_description}>
-</td>
-</tr>
 
 
 </table>

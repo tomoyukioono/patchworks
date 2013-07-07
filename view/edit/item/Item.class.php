@@ -33,30 +33,37 @@ class Patchworks_View_Edit_Item extends Action
     function execute()
     {
      $this->patchworks_id=intval($this->patchworksView->getPatchworksID($this->block_id));
+     // patchworks_id が設定されていないときは、エラーにする。
+     // ブロックを設定したては、ブロックとpatchworksがひもづけられていない。
      if ($this->patchworks_id === false || $this->patchworks_id === 0) {
                 return "error";
      }
+     // patchworks の設定情報取得
+     $this->config=$this->patchworksView->getConfig($this->patchworks_id);
+     // ブロック毎の情報を取得
      $this->item=$this->patchworksView->getItem($this->block_id);
+     // ブロック毎の情報が設定されていない場合にフラグをたてる
      if ( isset($this->item->patchworks_id) )
        {$this->patchworks_data_flag=1;}
-     $this->multis=$this->patchworksView->getMultis();
      $x=BASE_DIR ."/extra/addin/patchworksID/".$this->patchworks_id."/patchworks_view_edit_item_".$this->patchworks_id. ".html";
+     // edit_item 用のスクリプトがあるかどうかをチェックする。あったらそちらを使う
      if (!is_file($x)){$x = "";}
      $this->view_edit_item_template=$x;
 
-     $x = BASE_DIR .'/extra/addin/patchworksID/'.$this->patchworks_id.'/edit_item.php';
+     $x = BASE_DIR .'/extra/addin/patchworksID/'.$this->patchworks_id.'/view_edit_item.php';
      if ( is_file( $x ) ) {
      // ここでコードを読み込む
        include($x);
        return "item";
      } else {
 
-  if (isset($this->item->multidatabase_id)  ) {
-  $multi_by_block = $this->patchworksView->getMultiByBlockID($this->item->multidatabase_id,$this->block_id);
+  if (isset($this->config->multidatabase_id)  ) {
+  $multi_by_block = $this->patchworksView->getMultiByBlockID($this->config->multidatabase_id,$this->block_id);
   } else {
   $multi_by_block = array();
-      $this->item->multidatabase_id=0;
+      $this->config->multidatabase_id=0;
   } 
+  $this->multi_by_block=$multi_by_block;
 
         return "item";
 

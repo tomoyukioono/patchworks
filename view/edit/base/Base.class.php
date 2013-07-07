@@ -42,7 +42,9 @@ class Patchworks_View_Edit_Base extends Action
        }  
      }
      sort($xarray); 
-     $this->xxx = print_r($xarray,true);
+
+     //$this->xxx = print_r($xarray,true);
+     $this->config->patchworks_all  = implode(',',$xarray); 
      if (isset($this->config->patchworks_id)) 
          {$this->patchworks_data_flag = 1 ;}
             if ($this->patchworks_id === false) {

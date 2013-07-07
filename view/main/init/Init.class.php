@@ -29,8 +29,10 @@ class Patchworks_View_Main_Init extends Action
 
     function execute()
     {
-        $this->patchworks_id=$this->patchworksView->getPatchworksID($this->block_id);
-
+    $this->patchworks_id=intval($this->patchworksView->getPatchworksID($this->block_id));
+     if (  $this->patchworks_id == 0 ) {
+     return "error";
+     } 
 
 
         $this->user_id = $this->session->getParameter('_user_id');
@@ -44,22 +46,19 @@ class Patchworks_View_Main_Init extends Action
         
         $this->multidatabase_id =0; 
 
-        if (isset( $this->item->multidatabase_id) ){
-        $this->multidatabase_id =$this->item->multidatabase_id;
+        if (isset( $this->config->multidatabase_id) ){
+        $this->multidatabase_id =$this->config->multidatabase_id;
         } 
 
-        if (  intval($this->patchworks_id) < 1 ){
-          return 'success';
-        }
 // ここでコードを読み込む
        $x=intval($this->patchworks_id);
-       include(BASE_DIR .'/extra/addin/patchworksID/'.$x.'/main_init.php');
+       include(BASE_DIR .'/extra/addin/patchworksID/'.$x.'/view_main_init.php');
        
        $x=intval($this->patchworks_id);
        $x=BASE_DIR ."/extra/addin/patchworksID/".$x."/patchworks_view_main_init_".$x. ".html";
          //return  'success' . $this->patchworks_id; 
        $this->view_main_init_template=$x;
-          return 'success';
+       return 'success';
     }
 }
 ?>
