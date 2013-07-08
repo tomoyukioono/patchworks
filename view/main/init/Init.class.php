@@ -30,34 +30,44 @@ class Patchworks_View_Main_Init extends Action
     function execute()
     {
     $this->patchworks_id=intval($this->patchworksView->getPatchworksID($this->block_id));
+     
      if (  $this->patchworks_id == 0 ) {
      return "error";
      } 
-
-
+        // patchworks_id を簡便のために id とする
+        $id = $this->patchworks_id;
+         
         $this->user_id = $this->session->getParameter('_user_id');
         $this->handle = $this->session->getParameter('_handle');
-        $this->config = $this->patchworksView->getConfig($this->patchworks_id);
+        $this->config = $this->patchworksView->getConfig($id);
         $this->item=$this->patchworksView->getItem($this->block_id);
-        $this->groups=$this->patchworksView->getGroups();
-        $this->rooms=$this->patchworksView->getRoomsByUser($this->user_id);
-        $x=$this->patchworksView->getGlobalConfigByName("first_choice_startpage");
-        $this->first_choice_startpage = $x;
+
+        $this->room_list=$this->patchworksView->getRoomList();
+
+        $this->rooms_by_user=$this->patchworksView->getRoomsByUser($this->user_id);
+        
+        $this->first_choice_startpage = 
+        $this->patchworksView->getGlobalConfigByName("first_choice_startpage");
         
         $this->multidatabase_id =0; 
 
         if (isset( $this->config->multidatabase_id) ){
         $this->multidatabase_id =$this->config->multidatabase_id;
-        } 
+        }
+        // テンプレートが読み込む、スクリプトファイル 
+        $x=BASE_DIR ."/webapp/modules/patchworks/templates/patchworks_script.html";
+        $this->patchworks_script = $x;
 
 // ここでコードを読み込む
-       $x=intval($this->patchworks_id);
-       include(BASE_DIR .'/extra/addin/patchworksID/'.$x.'/view_main_init.php');
+       $x=BASE_DIR .'/extra/addin/patchworksID/'.$id.'/view_main_init.php';
+       if (is_file($x)) {include($x);};
        
-       $x=intval($this->patchworks_id);
-       $x=BASE_DIR ."/extra/addin/patchworksID/".$x."/patchworks_view_main_init_".$x. ".html";
-         //return  'success' . $this->patchworks_id; 
+       $x=BASE_DIR ."/extra/addin/patchworksID/".$id."/patchworks_view_main_init_".$id. ".html";
+       if (is_file($x)) {
        $this->view_main_init_template=$x;
+       };
+         //return  'success' . $this->patchworks_id; 
+
        return 'success';
     }
 }

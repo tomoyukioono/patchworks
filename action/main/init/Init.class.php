@@ -26,15 +26,16 @@ class Patchworks_Action_Main_Init extends Action
 
 	function execute()
 	{
-       $this->patchworks_id=intval($this->patchworksView->getPatchworksID($this->block_id));
-     //file_put_contents('temp.out',$this->patchworks_id);
+     $this->patchworks_id=intval($this->patchworksView->getPatchworksID($this->block_id));
+     
+     $error_flag = false;
      $x = BASE_DIR .
      '/extra/addin/patchworksID/'.$this->patchworks_id.'/action_main_init.php';
      if (is_file($x) ) {
-     include($x);
+         include($x);
      }
-     if ( $error_flag  ) {return "error";};
 
+     if ( $error_flag ) { return "error"; }
      return "success";
     }
 }

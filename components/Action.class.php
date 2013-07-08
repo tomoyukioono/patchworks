@@ -39,32 +39,33 @@ class Patchworks_Components_Action
 		$this->_request =& $container->getComponent("Request");
 	}
     
-    function setConfig(){
+    function setConfig($patchworks_id,$config){
         // 不要だと思うけど、念の為に型判定
-        $patchworks_id = intval($this->_request->getParameter("patchworks_id"));
+        $patchworks_id = intval($patchworks_id);
         if (  $patchworks_id < 1 ) {
             return false;
         }
 
         $params = array($patchworks_id);
 
-
+        // すでに設定情報が登録されているかどうかの判定
         $sql = "SELECT patchworks_id ".
                 "FROM {patchworks_config} ".
                 "WHERE patchworks_id = ?";
+        
+
         $xxx = $this->_db->execute($sql, $params);
         if ($xxx === false) {
             $this->_db->addError();
             return false;
         }
 
-        $config = json_encode($this->_request->getParameters());
-        $params = array(
+       $params = array(
             "patchworks_id" => $patchworks_id,
             "config" => $config
         );
 
-        // IDが存在したときはエラー
+        // データがない場合には、insert する
         if ( isset($xxx[0]['patchworks_id'])) {
             $xxx = $this->_db->updateExecute("patchworks_config", $params, "patchworks_id", true);
         } else {
@@ -78,7 +79,7 @@ class Patchworks_Components_Action
 
     }
    /**
-     * patchworks オプション情報をつけこむ
+     * patchworks 個別情報をつけこむ
      *
      * @return boolean  true or false
      * @access  public

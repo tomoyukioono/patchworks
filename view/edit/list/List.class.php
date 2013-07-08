@@ -42,7 +42,9 @@ class Patchworks_View_Edit_List extends Action
       $xx=array();
       foreach ( $xarray as $k=>$v ) {
         $x=$this->patchworksView->getConfig($v);
-        $xx[$v]['name'] = $x->patchworks_name;
+        if ( $x ) {
+            $xx[$v]['name'] = $x->patchworks_name;
+        } else {$xx[$v]['name'] = "";}
         $xx[$v]['id'] = $v;
       }
       //$this->xxx= print_r($xx,true);

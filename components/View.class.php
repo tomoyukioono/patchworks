@@ -255,8 +255,8 @@ class Patchworks_Components_View
 	 */
 
 
-	function getGroups() {
-    // group room一覧情報を取得
+	function getRoomList() {
+    // group room一覧情報を取得( room は、特別 page )
 		$params = array(2);
 		$sql = "SELECT room_id,page_name ".
 				"FROM {pages} ".
@@ -317,6 +317,7 @@ class Patchworks_Components_View
     }
 
     // sql を直接送ってデータ取得
+    // なんでもあり
     function getDataBySql($params,$sql) {
 		$x = $this->_db->execute($sql, $params);
 		if ($x === false) {
