@@ -129,7 +129,12 @@ class Patchworks_Components_View
 		$sql = "SELECT multidatabase_id,multidatabase_name ".
 				"FROM {multidatabase} ";
 		$x = $this->_db->execute($sql);
-        return $x;
+        $xarray  = array();
+        foreach ($x as $k=>$v){
+          $xarray[$v['multidatabase_id']]['multidatabase_name'] = $v['multidatabase_name'];
+          $xarray[$v['multidatabase_id']]['multidatabase_id'] = $v['multidatabase_id'];
+        }
+        return $xarray;
     }
 
 	/**
