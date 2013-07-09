@@ -23,7 +23,7 @@ class Patchworks_View_Main_Init extends Action
     var $block_id = null;
    // 使用コンポーネントを受け取るため
     var $patchworksView = null;
-    var $onlineView = null;
+    var $db = null;
     var $session = null;
     var $request = null;
 
@@ -38,22 +38,9 @@ class Patchworks_View_Main_Init extends Action
         $id = $this->patchworks_id;
          
         $this->user_id = $this->session->getParameter('_user_id');
-        $this->handle = $this->session->getParameter('_handle');
         $this->config = $this->patchworksView->getConfig($id);
-        $this->item=$this->patchworksView->getItem($this->block_id);
+        $this->item = $this->patchworksView->getItem($this->block_id);
 
-        $this->room_list=$this->patchworksView->getRoomList();
-
-        $this->rooms_by_user=$this->patchworksView->getRoomsByUser($this->user_id);
-        
-        $this->first_choice_startpage = 
-        $this->patchworksView->getGlobalConfigByName("first_choice_startpage");
-        
-        $this->multidatabase_id =0; 
-
-        if (isset( $this->config->multidatabase_id) ){
-        $this->multidatabase_id =$this->config->multidatabase_id;
-        }
         // テンプレートが読み込む、スクリプトファイル 
         $x=BASE_DIR ."/webapp/modules/patchworks/templates/patchworks_script.html";
         $this->patchworks_script = $x;
@@ -61,11 +48,17 @@ class Patchworks_View_Main_Init extends Action
 // ここでコードを読み込む
        $x=BASE_DIR .'/extra/addin/patchworksID/'.$id.'/view_main_init.php';
        if (is_file($x)) {include($x);};
-       
+// パッチーク別のテンプレートを読み込む       
        $x=BASE_DIR ."/extra/addin/patchworksID/".$id."/patchworks_view_main_init_".$id. ".html";
        if (is_file($x)) {
        $this->view_main_init_template=$x;
        };
+// パッチーク別のエラーテンプレートを読み込む       
+       $x=BASE_DIR ."/extra/addin/patchworksID/".$id."/patchworks_view_error_".$id. ".html";
+       if (is_file($x)) {
+       $this->view_error_template=$x;
+       };
+
          //return  'success' . $this->patchworks_id; 
 
        return 'success';
