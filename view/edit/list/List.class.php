@@ -8,10 +8,10 @@ class Patchworks_View_Edit_List extends Action
 
     // 使用コンポーネントを受け取るため
     var $patchworksView = null;
+    var $patchworksAction = null;
     var $request = null;
     var $session = null;
-
-
+    var $config = null;
 
     /**
      * 工事中
@@ -20,23 +20,53 @@ class Patchworks_View_Edit_List extends Action
      */
     function execute()
     {
-      $this->patchworks_id=$this->patchworksView->getPatchworksID($this->block_id);
-            if ($this->patchworks_id === false) {
-                return "error";
-            }
+      //インストール直後の処理、999999 を設定
       $x = $this->patchworksView->getConfig(999999);
+      if (count($x)== 0 ) {
+      $x = parse_ini_file(BASE_DIR .
+      "/extra/addin/patchworksID/999999/name.ini");
+      $config->patchworks_active = $x['list'];
+      $this->patchworksAction->setConfig(999999,json_encode($config));
+      $x = $config; 
+      }
+      // name.ini には、1,2,3とか書いてある。 
       $x = $x->patchworks_active;
       $xarray=explode(",",$x);  
+
       $xx=array();
       foreach ( $xarray as $k=>$v ) {
         $x=$this->patchworksView->getConfig($v);
         if ( $x ) {
             $xx[$v]['name'] = $x->patchworks_name;
-        } else {$xx[$v]['name'] = "";}
+        } else {
+           $xx[$v]['name'] = "";
+           $x = BASE_DIR .
+           "/extra/addin/patchworksID/".$v."/name.ini";
+           if (is_file($x)) {
+             $x = parse_ini_file($x);
+               if (isset($x['name'])) {
+                   $xx[$v]['name'] = $x['name'];
+               } else {
+                   $xx[$v]['name'] = "dummy";
+                   }
+            }
+      // 
+      $config = null; 
+      $config->patchworks_name = $xx[$v]['name'];;
+      $config->patchworks_id = $v;;
+      $this->patchworksAction->setConfig($v,json_encode($config));
+      }
         $xx[$v]['id'] = $v;
       }
-      //$this->xxx= print_r($xx,true);
+
       $this->patchworks_list= $xx;
+      
+      $this->patchworks_id = 
+      $this->patchworksView->getPatchworksID($this->block_id);
+            if ($this->patchworks_id === false) {
+                return "error";
+            }
+      //$this->xxx= print_r($xx,true);
       $x = BASE_DIR ."/webapp/modules/patchworks/templates/default/patchworks_view_edit_list_one.html";
       $this->view_edit_list_one_template=$x;
 

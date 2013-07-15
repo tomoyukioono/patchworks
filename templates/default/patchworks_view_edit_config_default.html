@@ -48,13 +48,13 @@
 </td>
 </tr>
 
-
+<{* マルチデータベースが設定されている場合 *}>
+<{if $action.multis }>
 <tr class="row">
 <th class="nowrap" scope="row">
 <{$lang.patchworks_multi_name}>
 </th>
 <td>
-
 <select id="multi<{$id}>" name="multidatabase_id" >
 <option value="" ></option>
 <{foreach from=$action.multis item=multis name="multis"}>
@@ -67,7 +67,7 @@
 <{$lang.patchworks_multi_description}>
 </td>
 </tr>
-
+<{/if}>
 
 </table>
     <div class="btn-bottom">

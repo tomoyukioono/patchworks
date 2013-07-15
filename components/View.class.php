@@ -86,13 +86,15 @@ class Patchworks_Components_View
 				"FROM {patchworks_config} ".
 				"WHERE patchworks_id = ?";
 		$x = $this->_db->execute($sql,$params);
+
 		if ($x === false) {
 			$this->_db->addError();
-			return $x;
+			return array();
 		}
+
 		if(isset($x[0]["config"])) {
 		      return json_decode($x[0]["config"]);} else
-        {return 0;}
+        {return array();}
 
     }
 
@@ -129,10 +131,14 @@ class Patchworks_Components_View
 		$sql = "SELECT multidatabase_id,multidatabase_name ".
 				"FROM {multidatabase} ";
 		$x = $this->_db->execute($sql);
+        
         $xarray  = array();
+        if ( ! $x  ) {return  array();};
         foreach ($x as $k=>$v){
-          $xarray[$v['multidatabase_id']]['multidatabase_name'] = $v['multidatabase_name'];
-          $xarray[$v['multidatabase_id']]['multidatabase_id'] = $v['multidatabase_id'];
+          $xarray[$v['multidatabase_id']]['multidatabase_name'] = 
+          $v['multidatabase_name'];
+          $xarray[$v['multidatabase_id']]['multidatabase_id'] = 
+          $v['multidatabase_id'];
         }
         return $xarray;
     }
@@ -151,9 +157,10 @@ class Patchworks_Components_View
 				"FROM {multidatabase_metadata} ".
 				"WHERE multidatabase_id = ?";
 		$x = $this->_db->execute($sql, $params);
+        // error のときは、空の配列を返す
 		if ($x === false) {
 			$this->_db->addError();
-			return false;
+			return array();
 		}
         $xxx=array();
         foreach ($x as $k=>$v) {
@@ -188,14 +195,18 @@ class Patchworks_Components_View
 				"FROM {multidatabase} ".
 				"WHERE multidatabase_id = ? ";
 		$x = $this->_db->execute($sql, $params);
+        if ( ! $x  ) {return  array();};
+
         if ( isset($x[0]['title_metadata_id']) ) {
 		   $params = array($x[0]['title_metadata_id']);
 		   $sql = "SELECT   content_id,content ".
 		     	  "FROM {multidatabase_metadata_content} ".
 				  "WHERE metadata_id = ? ";
+        } else { return array();
         }
 		$x = $this->_db->execute($sql, $params);
         //return array("x y z");
+        if ( ! $x  ) {return  array();};
         return $x;
     }
 
@@ -205,7 +216,8 @@ class Patchworks_Components_View
 				"WHERE content_id = ? ";
 		 $params = array($content_id);
 		 $x = $this->_db->execute($sql, $params);
-           
+         if ( ! $x  ) {return  array();};
+   
           if ( isset($x[0]) ) {
           return $x;
           $xx = array();

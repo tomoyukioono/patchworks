@@ -24,8 +24,9 @@ class Patchworks_View_Edit_Base extends Action
      $this->config=$this->patchworksView->getConfig($this->patchworks_id);
      $x = scandir(BASE_DIR . "/extra/addin/patchworksID");
      $xarray = array();
+     // 一覧に 999999 はでてこない
      foreach ($x as $k=>$v) {
-       if (intval($v) >0 ) {
+       if (intval($v) >0 && intval($v) <> 999999) {
          $xarray[]=$v;
        }  
      }

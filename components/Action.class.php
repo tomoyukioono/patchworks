@@ -105,24 +105,44 @@ class Patchworks_Components_Action
      * @return boolean  true or false
      * @access  public
      */
-    function setPatchworks()
-    {
-        $blockID = $this->_request->getParameter("block_id");
-        $params = array($blockID);
-        $sql = "SELECT block_id ".
+    function setPatchworks($block_id,$patchworks_id)
+    {   
+        // 割り当てる対象のブロックと patchworks_id を同じにする
+/**
+        $block_id = 
+        $this->_request->getParameter("block_id");
+        $patchworks_id =  
+        intval($this->_request->getParameter("patchworks_id"));
+**/
+        //  
+        if ( $patchworks_id == 0 ){
+            return false;
+        } 
+ 
+        $params = array($block_id);
+        $sql = "SELECT patchworks_id ".
                 "FROM {patchworks} ".
                 "WHERE block_id = ?";
-        $blockIDs = $this->_db->execute($sql, $params);
-        if ($blockIDs === false) {
+        //
+        $id = $this->_db->execute($sql, $params);
+
+        if ($id === false) {
             $this->_db->addError();
             return false;
         }
+ 
+        // 変更なしならそのまま
+        if ($id === $patchworks_id) {
+            return true;
+        }
         $params = array(
-            "block_id" => $blockID,
-            "patchworks_id" => intval($this->_request->getParameter("patchworks_id"))
-        );
-       if (!empty($blockIDs)) {
-            $result = $this->_db->updateExecute("patchworks", $params, "block_id", true);
+            "block_id" => $block_id,
+            "patchworks_id" => $patchworks_id,
+            "item" => "");
+       if (!empty($id)) {
+            // item をクリヤ
+            $result = 
+            $this->_db->updateExecute("patchworks", $params, "block_id", true);
         } else {
             $result = $this->_db->insertExecute("patchworks", $params, true);
         }

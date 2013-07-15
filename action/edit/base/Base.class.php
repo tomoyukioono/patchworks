@@ -15,6 +15,8 @@ class Patchworks_Action_Edit_Base extends Action
 	function execute()
 	{ 
         $config = $this->request->getParameters();
+        $x = preg_replace('/,999999/',"",$config['patchworks_active']);
+        $config['patchworks_active'] = $x; 
         if ($this->patchworksAction->setConfig($this->patchworks_id,json_encode($config)) ) {
 		return "success";
         }
