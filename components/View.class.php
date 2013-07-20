@@ -170,7 +170,7 @@ class Patchworks_Components_View
         return $xxx; 
 
     }
-	function getMultiMeta($multidatabase_id) {
+	function getMultiMetaName($multidatabase_id) {
     // Meta data の一覧を取得し、名前をキーにして戻す
 		$params = array(intval($multidatabase_id));
 		$sql = "SELECT  metadata_id,name ".
@@ -231,7 +231,7 @@ class Patchworks_Components_View
     // 指定された汎用DBが、項目名として、block_id を持っている場合に、
     // そのコンテンツを戻す
        $xxx = array();
-	   $metadata=$this->getMultiMeta($multidatabase_id); 
+	   $metadata=$this->getMultiMetaName($multidatabase_id); 
 
        if ( isset($metadata['block_id']) ){
 		$metadata_block_id=$metadata['block_id'];
