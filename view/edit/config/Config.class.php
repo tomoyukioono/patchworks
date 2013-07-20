@@ -41,7 +41,7 @@ class Patchworks_View_Edit_Config extends Action
      }
      $this->view_edit_config_template=$x;
 
-     if ( isset($this->config->patchworks_id) )
+     if ( isset($this->config['patchworks_id']) )
      {$this->patchworks_data_flag=1;}
      $x = BASE_DIR .'/extra/addin/patchworksID/' . 
      $this->patchworks_id.'/view_edit_config.php';

@@ -29,13 +29,13 @@ class Patchworks_View_Edit_Item extends Action
                 return "error";
      }
 
-  if (isset($this->config->multidatabase_id)  ) {
+  if (isset($this->config['multidatabase_id'])  ) {
    $multi_by_block = 
    $this->patchworksView->getMultiByBlockID(
-   $this->config->multidatabase_id,$this->block_id);
+   $this->config['multidatabase_id'],$this->block_id);
   } else {
     $multi_by_block = array();
-    $this->config->multidatabase_id=0;
+    $this->config['multidatabase_id'] = 0;
   } 
   $this->multi_by_block=$multi_by_block;
      // patchworks の設定情報取得
@@ -48,7 +48,7 @@ class Patchworks_View_Edit_Item extends Action
     $this->patchworks_script = $x;
 
      // ブロック毎の情報が設定されていない場合にフラグをたてる
-     if ( isset($this->item->patchworks_id) )
+     if ( isset($this->item['patchworks_id']) )
        {$this->patchworks_data_flag=1;}
        $x=BASE_DIR ."/extra/addin/patchworksID/" . 
        $this->patchworks_id."/patchworks_view_edit_item_" . 

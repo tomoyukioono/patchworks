@@ -62,8 +62,9 @@ class Patchworks_Components_View
 			$this->_db->addError();
 			return $x;
 		}
-		if(isset($x[0]["item"])) {
-		      return json_decode($x[0]["item"]);} else
+// array として返す
+		if( isset($x[0]["item"]) ) {  
+		    return json_decode($x[0]["item"] , true);} else
         {return 0;}
 
 
@@ -92,8 +93,8 @@ class Patchworks_Components_View
 			return array();
 		}
 
-		if(isset($x[0]["config"])) {
-		      return json_decode($x[0]["config"]);} else
+		if(isset($x[0]["config"]) ) { 
+		   return json_decode($x[0]["config"] , true);} else
         {return array();}
 
     }
@@ -219,11 +220,12 @@ class Patchworks_Components_View
          if ( ! $x  ) {return  array();};
    
           if ( isset($x[0]) ) {
-          return $x;
           $xx = array();
-           foreach ($x as $k=>$v) {
+          foreach ($x as $k=>$v) {
+            $xx[$v['metadata_id']] = $v['content'];
           }
-         }
+         } else { return array();};
+          return $xx;
     }  
     function getMultiByBlockID($multidatabase_id,$block_id) {
     // 指定された汎用DBが、項目名として、block_id を持っている場合に、

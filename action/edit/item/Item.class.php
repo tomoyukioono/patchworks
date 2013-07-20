@@ -14,9 +14,11 @@ class Patchworks_Action_Edit_Item extends Action
 
 	function execute()
 	{
-       $this->patchworks_id=intval($this->patchworksView->getPatchworksID($this->block_id));
+    $this->patchworks_id = 
+    intval($this->patchworksView->getPatchworksID($this->block_id));
+    $config = $this->patchworksView->getConfig($this->patchworks_id);
      //file_put_contents('temp.out',$this->patchworks_id);
-        $item = $this->request->getParameters();
+     $item = $this->request->getParameters();
      $x = BASE_DIR .
      '/extra/addin/patchworksID/'.$this->patchworks_id.'/action_edit_item.php';
      if (is_file($x) ) {
