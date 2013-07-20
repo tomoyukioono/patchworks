@@ -30,14 +30,14 @@ class Patchworks_View_Edit_List extends Action
       $x = $config; 
       }
       // name.ini には、1,2,3とか書いてある。 
-      $x = $x->patchworks_active;
+      $x = $x['patchworks_active'];
       $xarray=explode(",",$x);  
 
       $xx=array();
       foreach ( $xarray as $k=>$v ) {
         $x=$this->patchworksView->getConfig($v);
         if ( $x ) {
-            $xx[$v]['name'] = $x->patchworks_name;
+            $xx[$v]['name'] = $x['patchworks_name'];
         } else {
            $xx[$v]['name'] = "";
            $x = BASE_DIR .

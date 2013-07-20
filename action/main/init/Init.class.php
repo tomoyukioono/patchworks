@@ -13,7 +13,8 @@ class Patchworks_Action_Main_Init extends Action
 
 	function execute()
 	{
-     $this->patchworks_id=intval($this->patchworksView->getPatchworksID($this->block_id));
+     $this->patchworks_id = 
+     intval($this->patchworksView->getPatchworksID($this->block_id));
      
      $error_flag = false;
      $x = BASE_DIR .

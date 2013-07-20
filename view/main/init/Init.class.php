@@ -17,7 +17,9 @@ class Patchworks_View_Main_Init extends Action
 
     function execute()
     {
-    $this->patchworks_id=intval($this->patchworksView->getPatchworksID($this->block_id));
+
+    $this->patchworks_id = 
+    intval($this->patchworksView->getPatchworksID($this->block_id));
      
      if (  $this->patchworks_id == 0 ) {
      return "error";
