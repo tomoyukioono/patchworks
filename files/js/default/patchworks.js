@@ -32,6 +32,12 @@ checkCurrent: function() {
                                         }.bind(this);
         commonCls.sendPost(this.id, post, params);
     }
+    postMainInit: function() {
+        var post = {
+            "action":"patchworks_action_main_init"
+        };
 
+        commonCls.sendPost(this.id, post, params);
+    }
 
 }
