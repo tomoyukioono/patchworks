@@ -16,7 +16,7 @@
                 </label>
             </th>
             <td>
-<input id="patchworks_name" class="text" type="text" name="patchworks_name" /> 
+<input  class="text" type="text" name="patchworks_name" /> 
             </td>
         </tr>
 
@@ -27,7 +27,7 @@
 </label>
 </th>
 <td>
-<textarea id="patchworks_config_code"
+<textarea 
  name="patchworks_config_code" />
 <{$action.config.patchworks_config_code}>
 </textarea>
@@ -41,7 +41,7 @@
 </label>
 </th>
 <td>
-<textarea id="patchworks_config_message"
+<textarea 
  name="patchworks_config_message" />
 <{$action.config.patchworks_config_message}>
 </textarea>
@@ -55,7 +55,7 @@
 <{$lang.patchworks_multi_name}>
 </th>
 <td>
-<select id="multi<{$id}>" name="multidatabase_id" >
+<select  name="multidatabase_id" >
 <option value="" ></option>
 <{foreach from=$action.multis item=multis name="multis"}>
 <option value="<{$multis.multidatabase_id}>"
