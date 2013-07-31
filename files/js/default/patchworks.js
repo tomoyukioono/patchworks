@@ -31,13 +31,14 @@ checkCurrent: function() {
                                             commonCls.sendView(this.id, "patchworks_view_edit_list");
                                         }.bind(this);
         commonCls.sendPost(this.id, post, params);
-    }
+    },
     postMainInit: function() {
         var post = {
-            "action":"patchworks_action_main_init"
+            "action":"patchworks_action_main_init",
         };
-
-        commonCls.sendPost(this.id, post, params);
+    
+        var params = new Object();
+        commonCls.sendPost(this.id, post,params);
     }
 
 }
