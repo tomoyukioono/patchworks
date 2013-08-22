@@ -1,6 +1,5 @@
 <?php
-
-class Patchworks_View_Main_Init extends Action
+class Patchworks_View_Edit_Init extends Action
 {
     /**
      * [[機能説明]]
@@ -27,20 +26,19 @@ class Patchworks_View_Main_Init extends Action
         // patchworks_id を簡便のために id とする
         $id = $this->patchworks_id;
          
+        $this->user_id = $this->session->getParameter('_user_id');
         $this->config = $this->patchworksView->getConfig($id);
         $this->item = $this->patchworksView->getItem($this->block_id);
-        $this->role_auth_id = $this->session->getParameter('_role_auth_id');
-        $this->user_id = $this->session->getParameter('_user_id');
 
         // テンプレートが読み込む、スクリプトファイル 
         $x=BASE_DIR ."/webapp/modules/patchworks/templates/patchworks_script.html";
         $this->patchworks_script = $x;
 
 // ここでコードを読み込む
-       $x=BASE_DIR .'/extra/addin/patchworksID/'.$id.'/view_main_init.php';
+       $x=BASE_DIR .'/extra/addin/patchworksID/'.$id.'/view_edit_init.php';
        if (is_file($x)) {include($x);};
 // パッチーク別のテンプレートを読み込む       
-       $x=BASE_DIR ."/extra/addin/patchworksID/".$id."/patchworks_view_main_init_".$id. ".html";
+       $x=BASE_DIR ."/extra/addin/patchworksID/".$id."/patchworks_view_edit_init_".$id. ".html";
        if (is_file($x)) {
        $this->view_main_init_template=$x;
        };
