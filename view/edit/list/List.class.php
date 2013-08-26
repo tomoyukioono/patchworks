@@ -44,16 +44,28 @@ class Patchworks_View_Edit_List extends Action
            "/extra/addin/patchworksID/".$v."/name.ini";
            if (is_file($x)) {
              $x = parse_ini_file($x);
+// name.ini 情報を漬け込む、パッチワーク名と、その概要の説明のみ
                if (isset($x['name'])) {
                    $xx[$v]['name'] = $x['name'];
                } else {
                    $xx[$v]['name'] = "dummy";
-                   }
+               }
+
+               if (isset($x['description'])) {
+                   $xx[$v]['description'] = $x['description'];
+               } else {
+                   $xx[$v]['description'] = "dummy";
+               }
+
             }
       // 
       $config = null; 
-      $config->patchworks_name = $xx[$v]['name'];;
+      $config->patchworks_name = 
+      $xx[$v]['name'];;
+      $config->patchworks_description = 
+      $xx[$v]['description'];;
       $config->patchworks_id = $v;;
+      
       $this->patchworksAction->setConfig($v,json_encode($config));
       }
         $xx[$v]['id'] = $v;

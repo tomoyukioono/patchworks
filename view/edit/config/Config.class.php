@@ -20,11 +20,18 @@ class Patchworks_View_Edit_Config extends Action
      */
     function execute()
     {
+     // ブロックIDから割り当てられているパッチーワークIDを取得する
+     // ブロックIDに patchworksIDが割り当てられていないならエラーにする
+     // patchworksID は、長いので、 id にする 
      $id = 
      intval($this->patchworksView->getPatchworksID($this->block_id));
      if ( $id == 0 ){return "error";};
+
+     //パッチワークスの設定情報を取得する。設定されていない場合もあるのに注意 
      $this->config=$this->patchworksView->getConfig($id);
      
+ 
+      
      $this->multis=$this->patchworksView->getMultis();
 
      $this->patchworks_id = $id;

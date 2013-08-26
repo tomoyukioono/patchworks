@@ -32,9 +32,9 @@ checkCurrent: function() {
                                         }.bind(this);
         commonCls.sendPost(this.id, post, params);
     },
-    postMainInit: function() {
+    postMain: function() {
         var post = {
-            "action":"patchworks_action_main_init",
+            "action":"patchworks_action_main_post",
         };
     
         var params = new Object();
