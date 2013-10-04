@@ -2,7 +2,7 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * 登録フォームデータ登録コンポーネントクラス
+ * Patchworks でデータ入力がある部分に対応
  *
  * @package     NetCommons Components
  * @author      Noriko Arai,Ryuji Masukawa
@@ -39,6 +39,7 @@ class Patchworks_Components_Action
 		$this->_request =& $container->getComponent("Request");
 	}
     
+        //  パッチ設定を保存
     function setConfig($patchworks_id,$config){
         // 不要だと思うけど、念の為に型判定
         $patchworks_id = intval($patchworks_id);
@@ -46,7 +47,7 @@ class Patchworks_Components_Action
             return false;
         }
 
-        $params = array($patchworks_id);
+        $params = array( $patchworks_id );
 
         // すでに設定情報が登録されているかどうかの判定
         $sql = "SELECT patchworks_id ".
@@ -79,7 +80,7 @@ class Patchworks_Components_Action
 
     }
    /**
-     * patchworks 個別情報をつけこむ
+     * patchworks block ごとの個別情報をつけこむ
      *
      * @return boolean  true or false
      * @access  public
@@ -107,13 +108,6 @@ class Patchworks_Components_Action
      */
     function setPatchworks($block_id,$patchworks_id)
     {   
-        // 割り当てる対象のブロックと patchworks_id を同じにする
-/**
-        $block_id = 
-        $this->_request->getParameter("block_id");
-        $patchworks_id =  
-        intval($this->_request->getParameter("patchworks_id"));
-**/
         //  
         if ( $patchworks_id == 0 ){
             return false;
@@ -135,10 +129,12 @@ class Patchworks_Components_Action
         if ($id === $patchworks_id) {
             return true;
         }
+
         $params = array(
             "block_id" => $block_id,
             "patchworks_id" => $patchworks_id,
             "item" => "");
+
        if (!empty($id)) {
             // item をクリヤ
             $result = 

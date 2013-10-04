@@ -39,6 +39,12 @@ class Patchworks_View_Edit_Base extends Action
             if ($this->patchworks_id === false) {
                 return "error";
             }
+
+
+$sql = "select patchworks_id as id ,count(*) as count from nc_patchworks ".
+        " group by patchworks_id order by patchworks_id; ";
+        $params=array();
+        $this->patchworks = $this->patchworksView->getDataBySql($params,$sql);
         return "base";
     }
 }

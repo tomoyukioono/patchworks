@@ -43,39 +43,44 @@ class Patchworks_Components_View
 
 
 	/**
-	 * block ごとの設定情報を取得する
+	 * block ごとの設定情報を取得する block の情報は item と命名している
 	 *
 	 * @return string
 	 * @access	public
 	 */
 	function getItem($block_id) {
         $block_id=intval($block_id);
+    // block 情報が取得されない場合は、エラーで戻る
         if ( $block_id <1  ) {
          return false;
         }
+
 		$params = array($block_id);
 		$sql = "SELECT item ".
 				"FROM {patchworks} ".
 				"WHERE block_id = ?";
+
 		$x = $this->_db->execute($sql,$params);
 		if ($x === false) {
 			$this->_db->addError();
 			return $x;
 		}
-// array として返す
+     // json 情報を読み込んで、array として返す。
 		if( isset($x[0]["item"]) ) {  
 		    return json_decode($x[0]["item"] , true);} else
         {return 0;}
 
 
       }
+
 	/**
-	 * patchworks_id の設定情報を取得する
+	 * patchworks_id の設定情報を取得する パッチ情報
 	 *
 	 * @return string
 	 * @access	public
 	 */
 	function getConfig($patchworks_id) {
+      // 不必要かもしれないけど、 
       // $patchworksID が自然数かどうかの判定を行なっている  
 
       $patchworks_id=intval($patchworks_id);
@@ -100,13 +105,19 @@ class Patchworks_Components_View
     }
 
 	/**
-	 * 現在配置されている patchworks_id を取得する
+	 * block_id から patchworks_id を取得する
 	 *
 	 * @return string
 	 * @access	public
 	 */
 	function &getPatchworksID($block_id)
 	{
+        $block_id=intval($block_id);
+    // block 情報が取得されない場合は、エラーで戻る
+        if ( $block_id < 1  ) {
+         return false;
+        }
+
 		$params = array($block_id);
 		$sql = "SELECT patchworks_id ".
 				"FROM {patchworks} ".
@@ -135,6 +146,7 @@ class Patchworks_Components_View
         
         $xarray  = array();
         if ( ! $x  ) {return  array();};
+
         foreach ($x as $k=>$v){
           $xarray[$v['multidatabase_id']]['multidatabase_name'] = 
           $v['multidatabase_name'];
@@ -152,7 +164,8 @@ class Patchworks_Components_View
 	 */
 
 	function getMultiMetaData($multidatabase_id) {
-    // Meta data のデータを取得　キーは、メタデータID
+    // Meta data のデータを配列で取得　キーは、メタデータID
+
 		$params = array(intval($multidatabase_id));
 		$sql = "SELECT  * ".
 				"FROM {multidatabase_metadata} ".
@@ -170,8 +183,10 @@ class Patchworks_Components_View
         return $xxx; 
 
     }
+
 	function getMultiMetaName($multidatabase_id) {
     // Meta data の一覧を取得し、名前をキーにして戻す
+    // どのデータを選ぶかの一覧をつくるときに使う
 		$params = array(intval($multidatabase_id));
 		$sql = "SELECT  metadata_id,name ".
 				"FROM {multidatabase_metadata} ".
@@ -189,8 +204,9 @@ class Patchworks_Components_View
     }
 	
     function getMultiTitle($multidatabase_id) {
-    // 指定された汎用DBのタイトルをもってくる
-		$params = array($multidatabase_id);
+    // データのタイトル一覧を取得する
+    // 個別のデータの一覧を表示して選択するのに使う
+		$params = array(intval($multidatabase_id));
         // title を取得
 		$sql = "SELECT title_metadata_id ".
 				"FROM {multidatabase} ".
@@ -212,10 +228,11 @@ class Patchworks_Components_View
     }
 
     function getMultiByContentID($content_id) {
+    // 個別データを一括して取得する 
 		 $sql = "SELECT  metadata_id,content ".
 				"FROM {multidatabase_metadata_content} ".
 				"WHERE content_id = ? ";
-		 $params = array($content_id);
+		 $params = array( intval( $content_id ) );
 		 $x = $this->_db->execute($sql, $params);
          if ( ! $x  ) {return  array();};
    
@@ -226,16 +243,20 @@ class Patchworks_Components_View
           }
          } else { return array();};
           return $xx;
-    }  
+    }
+  
     function getMultiByBlockID($multidatabase_id,$block_id) {
     // 指定された汎用DBが、項目名として、block_id を持っている場合に、
     // そのコンテンツを戻す
+    // block ごとのデータヒモ付をする場合に使うためのメソッド
+    
        $xxx = array();
-	   $metadata=$this->getMultiMetaName($multidatabase_id); 
 
-       if ( isset($metadata['block_id']) ){
-		$metadata_block_id=$metadata['block_id'];
-		$params = array($metadata_block_id,$block_id);
+	   $metadata=$this->getMultiMetaName( intval( $multidatabase_id ) ); 
+
+       if ( isset( $metadata['block_id'] ) ){
+		$metadata_block_id = $metadata['block_id'];
+		$params = array($metadata_block_id,intval( $block_id ));
 		$sql = "SELECT content_id ".
 				"FROM {multidatabase_metadata_content} ".
 				"WHERE metadata_id = ? and  content = ?";
@@ -246,8 +267,8 @@ class Patchworks_Components_View
 		 $sql = "SELECT  metadata_id,content ".
 				"FROM {multidatabase_metadata_content} ".
 				"WHERE content_id = ? ";
-		 $params = array($content_id);
-         // content_id のデータを全部もってくる
+		 $params = array( $content_id );
+         // content_id のデータをもってくる
 		 $x = $this->_db->execute($sql, $params);
          if ( isset($x[0]) ) {
          // metadata の名前をキーにした連想配列をつくり戻す
@@ -275,7 +296,7 @@ class Patchworks_Components_View
 
 
 	function getRoomList() {
-    // group room一覧情報を取得( room は、特別 page )
+    // group room一覧情報を取得( room は、特別 page で、root_id が２
 		$params = array(2);
 		$sql = "SELECT room_id,page_name ".
 				"FROM {pages} ".
@@ -300,8 +321,8 @@ class Patchworks_Components_View
 	 * @return string
 	 * @access	public
 	 */
-    function getRoomsByUser($user_id) {
-		$params = array($user_id);
+    function getRoomsByUser( $user_id ) {
+		$params = array( $user_id );
 		$sql = "SELECT room_id,role_authority_id ".
 				"FROM {pages_users_link} ".
 				"WHERE user_id = ?";
@@ -320,7 +341,7 @@ class Patchworks_Components_View
     }
     
     // 設定情報の取得
-    function getGlobalConfigByName($conf_name) {
+    function getGlobalConfigByName( $conf_name ) {
 		$params = array($conf_name);
 		$sql = "SELECT conf_value ".
 				"FROM {config} ".
@@ -346,6 +367,7 @@ class Patchworks_Components_View
 		return $x;
     }
 
+    // Online メンバーの取得。やや関数の汎用性としては、ここにあるのは違う気もする。
 	function getOnlineMember(){
 	    $session = $this->_session;
         

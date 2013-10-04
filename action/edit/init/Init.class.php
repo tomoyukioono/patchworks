@@ -11,6 +11,7 @@ class Patchworks_Action_Edit_Init extends Action
     var $patchworksAction = null;
     var $patchworksView = null;
 
+	// ブロックでデータを入れることがあったら使うことがあるかもしれない
 	function execute()
 	{
      $this->patchworks_id =

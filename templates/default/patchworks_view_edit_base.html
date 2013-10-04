@@ -38,9 +38,6 @@
              </textarea>
             </td>
         </tr>
-
-
-
 </table>
     <div class="btn-bottom">
         <input class="btn-width" type="submit" value="<{$lang._regist|smarty:nodefaults}>" />
@@ -52,4 +49,19 @@
     var patchworksForm = $("patchworks_form<{$id}>");
     patchworksForm["action"].value = "patchworks_action_edit_base";
 </script>
+
+<table >
+<tr class="patchworks_grid_row"><th class="patchworks_grid_header">  id  </th>
+<th class="patchworks_grid_header">&nbsp; count </th></tr>
+<{foreach from=$action.patchworks item=patchwork name="patchwork"}>
+<tr class="patchworks_grid_row">
+<td class="patchworks_grid_col">
+<{$patchwork.id}>
+</td>
+<td class="patchworks_grid_col" ><{$patchwork.count}></td>
+
+</tr>
+<{/foreach}>
+</table>
+
 <{/strip}>

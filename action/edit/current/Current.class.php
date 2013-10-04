@@ -15,7 +15,6 @@ class Patchworks_Action_Edit_Current extends Action
 
 	function execute()
 	{
-       $x = $this->patchworksView->getConfig($this->patchworks_id);
 
        if (!$this->patchworksAction->setPatchworks( intval($this->block_id),
            intval($this->patchworks_id))) {
