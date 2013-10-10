@@ -7,10 +7,12 @@ clsPatchworks.prototype = {
         this.currentPatchworksID = null;
         this.patchworks_id = null;
     },
-checkCurrent: function() {
-    var current = $("patchworks_current" + this.currentPatchworksID + this.id);
-    current.checked = true;
+
+    checkCurrent: function() {
+        var current = $("patchworks_current" + this.currentPatchworksID + this.id);
+        current.checked = true;
     },
+
     changeCurrent: function(patchworksID) {
         var oldCurrentRow = $("patchworks_current_row_" + this.currentPatchworksID + this.id);
         if (oldCurrentRow) {
@@ -32,11 +34,12 @@ checkCurrent: function() {
                                         }.bind(this);
         commonCls.sendPost(this.id, post, params);
     },
+
     postMain: function() {
         var post = {
             "action":"patchworks_action_main_post",
         };
-    
+
         var params = new Object();
         commonCls.sendPost(this.id, post,params);
     }
