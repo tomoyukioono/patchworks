@@ -13,37 +13,38 @@
  */
 class Patchworks_Components_Action
 {
-	/**
-	 * @var DBオブジェクトを保持
-	 *
-	 * @access	private
-	 */
-	var $_db = null;
+    /**
+     * @var DBオブジェクトを保持
+     *
+     * @access	private
+     */
+    var $_db = null;
 
-	/**
-	 * @var Requestオブジェクトを保持
-	 *
-	 * @access	private
-	 */
-	var $_request = null;
+    /**
+     * @var Requestオブジェクトを保持
+     *
+     * @access	private
+     */
+    var $_request = null;
 
-	/**
-	 * コンストラクター だけ
-	 *
-	 * @access	public
-	 */
-	function Patchworks_Components_Action()
-	{
-		$container =& DIContainerFactory::getContainer();
-		$this->_db =& $container->getComponent("DbObject");
-		$this->_request =& $container->getComponent("Request");
-	}
-    
-        //  パッチ設定を保存
-    function setConfig($patchworks_id,$config){
+    /**
+     * コンストラクター だけ
+     *
+     * @access	public
+     */
+    function Patchworks_Components_Action()
+    {
+        $container =& DIContainerFactory::getContainer();
+        $this->_db =& $container->getComponent("DbObject");
+        $this->_request =& $container->getComponent("Request");
+    }
+
+    //  パッチ設定を保存
+    function setConfig($patchworks_id, $config)
+    {
         // 不要だと思うけど、念の為に型判定
         $patchworks_id = intval($patchworks_id);
-        if (  $patchworks_id < 1 ) {
+        if ($patchworks_id < 1) {
             return false;
         }
 
@@ -53,66 +54,73 @@ class Patchworks_Components_Action
         $sql = "SELECT patchworks_id ".
                 "FROM {patchworks_config} ".
                 "WHERE patchworks_id = ?";
-        
 
         $xxx = $this->_db->execute($sql, $params);
         if ($xxx === false) {
             $this->_db->addError();
+
             return false;
         }
 
-       $params = array(
-            "patchworks_id" => $patchworks_id,
-            "config" => $config
+        $params = array(
+                "patchworks_id" => $patchworks_id,
+                "config" => $config
         );
 
         // データがない場合には、insert する
-        if ( isset($xxx[0]['patchworks_id'])) {
+        if (isset($xxx[0]['patchworks_id'])) {
             $xxx = $this->_db->updateExecute("patchworks_config", $params, "patchworks_id", true);
         } else {
             $xxx = $this->_db->insertExecute("patchworks_config", $params, true);
         }
         if ($xxx === false) {
             $this->_db->addError();
+
             return false;
         }
+
         return true;
 
     }
-   /**
+
+    /**
      * patchworks block ごとの個別情報をつけこむ
      *
-     * @return boolean  true or false
+     * @return boolean true or false
      * @access  public
      */
-    function setItem($block_id,$item) {
+    function setItem($block_id,$item)
+    {
         //$item = json_encode($this->_request->getParameters());
         $params = array(
             "block_id" => $block_id,
             "item" => $item
         );
-       $xxx = $this->_db->updateExecute("patchworks",
-        $params, "block_id", true);
+
+        $xxx = $this->_db->updateExecute("patchworks", $params, "block_id", true);
+
         if ($xxx === false) {
             $this->_db->addError();
+
             return false;
         }
+
         return true;
     }
 
    /**
      * patchworks をブロックに割り当てる
      *
-     * @return boolean  true or false
+     * @return boolean true or false
      * @access  public
      */
     function setPatchworks($block_id,$patchworks_id)
-    {   
-        //  
-        if ( $patchworks_id == 0 ){
+    {
+        //
+        if ($patchworks_id == 0) {
             return false;
-        } 
- 
+        }
+
         $params = array($block_id);
         $sql = "SELECT patchworks_id ".
                 "FROM {patchworks} ".
@@ -122,9 +130,10 @@ class Patchworks_Components_Action
 
         if ($id === false) {
             $this->_db->addError();
+
             return false;
         }
- 
+
         // 変更なしならそのまま
         if ($id === $patchworks_id) {
             return true;
@@ -133,25 +142,19 @@ class Patchworks_Components_Action
         $params = array(
             "block_id" => $block_id,
             "patchworks_id" => $patchworks_id,
-            "item" => "");
+            "item" => ""
+        );
 
-       if (!empty($id)) {
+        if (!empty($id)) {
             // item をクリヤ
-            $result = 
-            $this->_db->updateExecute("patchworks", $params, "block_id", true);
+            $result = $this->_db->updateExecute("patchworks", $params, "block_id", true);
         } else {
             $result = $this->_db->insertExecute("patchworks", $params, true);
         }
         if (!$result) {
             return false;
         }
-        if (!$result) {
-            return false;
-        }
-       return true;
 
+        return true;
     }
-
-
 }
-?>
