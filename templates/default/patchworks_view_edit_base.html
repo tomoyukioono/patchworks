@@ -44,7 +44,7 @@
     var patchworksForm = $("patchworks_form<{$id}>");
     patchworksForm["action"].value = "patchworks_action_edit_base";
 </script>
-<<<<<<< HEAD
+
 <br />
 <br />
 <br />
@@ -64,18 +64,6 @@
 <td class="patchworks_grid_col" ><{$patchwork.count}></td>
 </tr>
 <{/foreach}>
-=======
-
-<table >
-    <tr class="patchworks_grid_row"><th class="patchworks_grid_header">  id  </th>
-    <th class="patchworks_grid_header">&nbsp; count </th></tr>
-    <{foreach from=$action.patchworks item=patchwork name="patchwork"}>
-        <tr class="patchworks_grid_row">
-            <td class="patchworks_grid_col"><{$patchwork.id}></td>
-            <td class="patchworks_grid_col" ><{$patchwork.count}></td>
-        </tr>
-    <{/foreach}>
->>>>>>> f6eb15def3530e90dd86aa3c76c9753c71ff8e82
 </table>
 </div>
 <{/strip}>
