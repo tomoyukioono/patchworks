@@ -2,35 +2,35 @@
 <{* パッチワーク一覧用テンプレート *}>
 <div class="outerdiv">
 <{$action.xxx}>
-	<form action="#">
+<form action="#">
+
 <{*
-		<div class="top_description">
-			<{$lang.patchworks}>
-		</div>
-			<table style="border: 2px #000000 solid;" summary="<{$lang.pathworks_list_summary}>">
+<div class="top_description">
+	<{$lang.patchworks}>
+</div>
+<table style="border: 2px #000000 solid;" summary="<{$lang.pathworks_list_summary}>">
 *}>
-		<fieldset>
-			<legend class="bold"><{$lang.patchworks}></legend>
+	<fieldset>
+		<legend class="bold"><{$lang.patchworks}></legend>
 
-			<table style="width: 100%;" summary="<{$lang.pathworks_list_summary}>">
+		<table style="width: 100%;" summary="<{$lang.pathworks_list_summary}>">
 
-				<tr class="patchworks_grid_row">
-					<th style="width: 5%;" class="patchworks_grid_header"></th>
-					<th style="width: 5%;" class="patchworks_grid_header">
-						<{$lang.patchworks_id}>
-					</th>
-					<th style="width: 90%;" class="patchworks_grid_header" >
-						<{$lang.patchworks_name}>
-					</th>
-				</tr>
+			<tr class="patchworks_grid_row">
+				<th style="width: 5%;" class="patchworks_grid_header"></th>
+				<th style="width: 5%;" class="patchworks_grid_header">
+					<{$lang.patchworks_id}>
+				</th>
+				<th style="width: 90%;" class="patchworks_grid_header" >
+					<{$lang.patchworks_name}>
+				</th>
+			</tr>
 
-            <{include file="patchworks_view_edit_list_one.html"}>
+	        <{include file="patchworks_view_edit_list_one.html"}>
 
+		</table>
+	</fieldset>
 
-			</table>
-		</fieldset>
-
-	</form>
+</form>
 </div>
 <{include file = "../patchworks_script.html"}>
 <{/strip}>
