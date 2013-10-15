@@ -45,15 +45,25 @@
     patchworksForm["action"].value = "patchworks_action_edit_base";
 </script>
 
-<table >
-    <tr class="patchworks_grid_row"><th class="patchworks_grid_header">  id  </th>
-    <th class="patchworks_grid_header">&nbsp; count </th></tr>
-    <{foreach from=$action.patchworks item=patchwork name="patchwork"}>
-        <tr class="patchworks_grid_row">
-            <td class="patchworks_grid_col"><{$patchwork.id}></td>
-            <td class="patchworks_grid_col" ><{$patchwork.count}></td>
-        </tr>
-    <{/foreach}>
+<br />
+<br />
+<br />
+<{**  パッチワークの状況提示   **}>
+<h3> パッチワークスの配置状況　</h3>
+<div style="width:100%;">
+<table style="margin: 0 auto;;padding:5px">
+<tr class="patchworks_grid_row">
+<th class="patchworks_grid_header">  patchworks ID  </th>
+<th class="patchworks_grid_header">&nbsp; count </th>
+</tr>
+<{foreach from=$action.patchworks item=patchwork name="patchwork"}>
+<tr class="patchworks_grid_row">
+<td class="patchworks_grid_col">
+<{$patchwork.id}>
+</td>
+<td class="patchworks_grid_col" ><{$patchwork.count}></td>
+</tr>
+<{/foreach}>
 </table>
-
+</div>
 <{/strip}>
