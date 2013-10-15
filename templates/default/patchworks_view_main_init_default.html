@@ -1,5 +1,9 @@
 <{if $action.xxx}>
 <{$action.xxx}>
 <{else}>
+<{if $action.item.patchworks_item_message}>
+<{$action.item.patchworks_item_message}>
+<{else}>
 <h3>id <{$action.patchworks_id}>  block <{$action.block_id}></h3>
+<{/if}>
 <{/if}>

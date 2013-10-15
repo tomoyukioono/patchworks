@@ -244,6 +244,28 @@ class Patchworks_Components_View
          } else { return array();};
           return $xx;
     }
+    
+    function getMultiByMetaData($multidatabase_id,
+       $metadataName,$content) {
+       // 項目と値からデータを取得する　連想配列で返すので注意
+       $contents = array();
+       // 該当項目がない場合は空配列を戻す
+	   $metadata=$this->getMultiMetaName( intval( $multidatabase_id ) ); 
+       if (  isset( $metadata[$metadataName] ) ){
+        $params = array($metadata[$metadataName],$content);
+        $sql = "SELECT content_id ".
+                "FROM {multidatabase_metadata_content} ".
+                "WHERE metadata_id = ? and  content = ?";
+        $x = $this->_db->execute($sql, $params);
+        if ( count($x) > 0) {
+           foreach ($x as $k=>$v){
+           $contents[]=$this->getMultiByContentID($v['content_id']);
+        }
+        }
+       }
+
+       return $contents; 
+    }
   
     function getMultiByBlockID($multidatabase_id,$block_id) {
     // 指定された汎用DBが、項目名として、block_id を持っている場合に、
